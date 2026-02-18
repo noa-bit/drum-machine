@@ -1,10 +1,10 @@
-#N canvas 63 107 450 300 12;
+#N canvas 162 169 708 332 12;
 #X msg 85 133 start;
 #X obj 219 144 bng 19 250 50 0 empty empty empty 0 -10 0 12 #fcfcfc #000000 #000000;
 #X obj 85 161 readsf~;
-#X obj 85 187 outlet~;
+#X obj 106 222 outlet~;
 #X obj 85 6 inlet;
-#X floatatom 224 63 5 0 0 0 - - - 0;
+#X floatatom 224 61 5 0 0 0 - - - 0;
 #X obj 219 97 == 1;
 #X obj 255 97 == 2;
 #X obj 291 97 == 3;
@@ -17,11 +17,11 @@
 #X obj 316 121 select 1;
 #X obj 85 50 unpack f f;
 #X floatatom 38 78 5 0 0 0 - - - 0;
-#X msg 295 194 open snare_high.wav;
-#X msg 296 169 open snare_bright.wav;
-#X msg 295 217 open snare_mid.wav;
+#X msg 295 194 open ../samples/rock/rock_kick_mt.wav;
+#X msg 295 217 open ../samples/rock/rock_kick_fifties.wav;
+#X msg 296 169 open ../samples/rock/rock_kick_box.wav;
 #X connect 0 0 2 0;
-#X connect 1 0 20 0;
+#X connect 1 0 19 0;
 #X connect 2 0 3 0;
 #X connect 4 0 16 0;
 #X connect 5 0 6 0;
@@ -31,7 +31,7 @@
 #X connect 7 0 14 0;
 #X connect 8 0 15 0;
 #X connect 9 0 18 0;
-#X connect 10 0 19 0;
+#X connect 10 0 20 0;
 #X connect 11 0 12 0;
 #X connect 12 0 0 0;
 #X connect 12 1 5 0;
