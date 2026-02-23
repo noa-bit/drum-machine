@@ -1,4 +1,4 @@
-#N canvas 545 30 991 742 12;
+#N canvas 449 30 991 742 12;
 #X msg 36 117 devices;
 #X msg 162 118 close;
 #X obj 32 186 print;
