@@ -1,24 +1,22 @@
 int Data[60];
 int inByte = 0;
-char buffer[40];
-int index = 0;
-int value = 0;
+
+
 void setup()
 {
-  pinMode(5, OUTPUT);
-  pinMode(6, OUTPUT);
   Serial.begin(9600);
-
+  analogReadResolution(10);
   // Analog inputs
-  pinMode(A0, INPUT); // BPM
-  pinMode(A1, INPUT); // SWING
-  pinMode(A2, INPUT); // TOTAL STEPS
-  pinMode(A3, INPUT); // CH STEPS
-  pinMode(A4, INPUT); // HITS
-  pinMode(A5, INPUT); // OFFSET
-  pinMode(A6, INPUT); // VOL / CUTOFF
-  pinMode(A7, INPUT); // PAN / RESO
-  pinMode(A8, INPUT); // SAMPLE / RANDOM
+  pinMode(14, INPUT); // BPM
+  pinMode(15, INPUT); // SWING
+  pinMode(16, INPUT); // TOTAL STEPS
+  pinMode(17, INPUT); // CH STEPS
+  pinMode(18, INPUT); // HITS
+  pinMode(19, INPUT); // OFFSET
+  pinMode(20, INPUT); // VOL / CUTOFF
+  pinMode(21, INPUT); // PAN / RESO
+  pinMode(22, INPUT); // SAMPLE / RANDOM
+  pinMode(23, INPUT); // CHAOS
 
   // Digital inputs
 pinMode(2, INPUT_PULLUP);   // BANK
@@ -35,179 +33,165 @@ pinMode(12, INPUT_PULLUP);  // ROTARY 6
 
 void loop()
 {
-    index = 0;
-  do
-  {
-    buffer[index] = Serial.read();
-    if(buffer[index]!=-1) index = index + 1;
-  }
-  while(buffer[index-1]!=32);
-  value = atoi(buffer);
-  if (value == 100) {
-    digitalWrite(5, 255);
-  }
-  if (value == 255) {
-    digitalWrite(6, 255);
-  }
-  if (value == 0) {
-    digitalWrite(5, 0);
-    digitalWrite(6, 0);
-  }
-  
-  Data[0] = !digitalRead(7);
 
-  // Global controls (flyttade +1)
-  Data[1] = map(analogRead(A0), 0, 1023, 60, 350); // BPM
-  Data[2] = map(analogRead(A1), 0, 1023, 0, 100); // SWING
-  Data[3] = map(analogRead(A2), 0, 1023, 1, 16); // TOTAL STEPS
-  Data[5] = digitalRead(2); // BANK
+  Data[0] = !digitalRead(6);
+  if (analogRead(23) > 200) {  
+    Data[59] = map(analogRead(23), 0, 1023, 0, 100);
+  } //CHAOS
+  else {
+    Data[59] = 0;
+  }
+  Data[1] = map(analogRead(14), 1023, 0, 60, 350); // BPM
+  Data[2] = map(analogRead(15), 1023, 0, 0, 100); // SWING
+  Data[3] = map(analogRead(16), 1023, 0, 1, 16); // TOTAL STEPS
+  Data[4] = digitalRead(2); // BANK
 
   // ============================
   // ROTARY 1 (Pin 9)
   // ============================
-  if (digitalRead(9) == HIGH)
+  if (digitalRead(7) == LOW)
   {
-    Data[6] = map(analogRead(A3), 0, 1023, 0, Data[3]);
-    Data[7] = map(analogRead(A4), 0, 1023, 0, Data[6]);
-    int maxOffset = max(Data[7] - 1, 0);
-	Data[8] = map(analogRead(A5), 0, 1023, 0, maxOffset);
+    Data[5] = map(analogRead(17), 1023, 0, 0, Data[3]);
+    Data[6] = map(analogRead(18), 1023, 0, 0, Data[5]);
+    int maxOffset = max(Data[6] - 1, 0);
+	Data[7] = map(analogRead(19), 1023, 0, 0, maxOffset);
     
-    if (digitalRead(4) == HIGH)
+    if (digitalRead(4) != LOW)
     {
-      Data[9]  = map(analogRead(A6), 0, 1023, 0, 2);
-      Data[10] = map(analogRead(A7), 0, 1023, 0, 2);
-      Data[11] = map(analogRead(A8), 0, 1023, 1, 3);
+      Data[8]  = map(analogRead(20), 1023, 0, 0, 1000);
+      Data[9] = map(analogRead(21), 1023, 0, 0, 1000);
+      Data[10] = map(analogRead(22), 1023, 0, 1, 3);
     }
     else
     {
-      Data[12] = map(analogRead(A6), 0, 1023, 0, 15000);
-      Data[13] = map(analogRead(A7), 0, 1023, 0, 4);
-      Data[14] = map(analogRead(A8), 0, 1023, 0, 50);
+      Data[11] = map(analogRead(20), 1023, 0, 0, 15000);
+      Data[12] = map(analogRead(21), 1023, 0, 0, 1000);
+      Data[13] = map(analogRead(22), 1023, 0, 0, 50);
     }
   }
 
   // ============================
   // ROTARY 2 (Pin 10)
   // ============================
-  if (digitalRead(10) == HIGH)
+  if (digitalRead(8) == LOW)
   {
-    Data[15] = map(analogRead(A3), 0, 1023, 0, Data[3]);
-    Data[16] = map(analogRead(A4), 0, 1023, 0, Data[15]);
-    int maxOffset = max(Data[16] - 1, 0);
-	Data[17] = map(analogRead(A5), 0, 1023, 0, maxOffset);
+    Data[14] = map(analogRead(17), 1023, 0, 0, Data[3]);
+    Data[15] = map(analogRead(18), 1023, 0, 0, Data[14]);
+    int maxOffset = max(Data[15] - 1, 0);
+	Data[16] = map(analogRead(19), 1023, 0, 0, maxOffset);
 
 
-    if (digitalRead(4) == HIGH)
+    if (digitalRead(4) != LOW)
     {
-      Data[18] = map(analogRead(A6), 0, 1023, 0, 2);
-      Data[19] = map(analogRead(A7), 0, 1023, 0, 2);
-      Data[20] = map(analogRead(A8), 0, 1023, 1, 3);
+      Data[17] = map(analogRead(20), 1023, 0, 0, 1000);
+      Data[18] = map(analogRead(21), 1023, 0, 0, 1000);
+      Data[19] = map(analogRead(22), 1023, 0, 1, 3);
     }
     else
     {
-      Data[21] = map(analogRead(A6), 0, 1023, 0, 15000);
-      Data[22] = map(analogRead(A7), 0, 1023, 0, 4);
-      Data[23] = map(analogRead(A8), 0, 1023, 0, 50);
+      Data[20] = map(analogRead(20), 1023, 0, 0, 15000);
+      Data[21] = map(analogRead(21), 1023, 0, 0, 1000);
+      Data[22] = map(analogRead(22), 1023, 0, 0, 50);
     }
   }
 
   // ============================
   // ROTARY 3 (Pin 11)
   // ============================
-  if (digitalRead(11) == HIGH)
+  if (digitalRead(9) == LOW)
   {
-    Data[24] = map(analogRead(A3), 0, 1023, 0, Data[3]);
-    Data[25] = map(analogRead(A4), 0, 1023, 0, Data[24]);
-    int maxOffset = max(Data[25] - 1, 0);
-	Data[26] = map(analogRead(A5), 0, 1023, 0, maxOffset);
+    Data[23] = map(analogRead(17), 1023, 0, 0, Data[3]);
+    Data[24] = map(analogRead(18), 1023, 0, 0, Data[23]);
+    int maxOffset = max(Data[24] - 1, 0);
+	Data[25] = map(analogRead(19), 1023, 0, 0, maxOffset);
 
 
-    if (digitalRead(4) == HIGH)
+    if (digitalRead(4) != LOW)
     {
-      Data[27] = map(analogRead(A6), 0, 1023, 0, 2);
-      Data[28] = map(analogRead(A7), 0, 1023, 0, 2);
-      Data[29] = map(analogRead(A8), 0, 1023, 1, 3);
+      Data[26] = map(analogRead(20), 1023, 0, 0, 1000);
+      Data[27] = map(analogRead(21), 1023, 0, 0, 1000);
+      Data[28] = map(analogRead(22), 1023, 0, 1, 3);
     }
     else
     {
-      Data[30] = map(analogRead(A6), 0, 1023, 0, 15000);
-      Data[31] = map(analogRead(A7), 0, 1023, 0, 4);
-      Data[32] = map(analogRead(A8), 0, 1023, 0, 50);
+      Data[29] = map(analogRead(20), 1023, 0, 0, 15000);
+      Data[30] = map(analogRead(21), 1023, 0, 0, 1000);
+      Data[31] = map(analogRead(22), 1023, 0, 0, 50);
     }
   }
 
   // ============================
   // ROTARY 4 (Pin 12)
   // ============================
-  if (digitalRead(12) == HIGH)
+  if (digitalRead(10) == LOW)
   {
-    Data[33] = map(analogRead(A3), 0, 1023, 0, Data[3]);
-    Data[34] = map(analogRead(A4), 0, 1023, 0, Data[33]);
-    int maxOffset = max(Data[34] - 1, 0);
-	Data[35] = map(analogRead(A5), 0, 1023, 0, maxOffset);
+    Data[32] = map(analogRead(17), 1023, 0, 0, Data[3]);
+    Data[33] = map(analogRead(18), 1023, 0, 0, Data[32]);
+    int maxOffset = max(Data[33] - 1, 0);
+	Data[34] = map(analogRead(19), 1023, 0, 0, maxOffset);
 
 
-    if (digitalRead(4) == HIGH)
+    if (digitalRead(4) != LOW)
     {
-      Data[36] = map(analogRead(A6), 0, 1023, 0, 2);
-      Data[37] = map(analogRead(A7), 0, 1023, 0, 2);
-      Data[38] = map(analogRead(A8), 0, 1023, 1, 3);
+      Data[35] = map(analogRead(20), 1023, 0, 0, 1000);
+      Data[36] = map(analogRead(21), 1023, 0, 0, 1000);
+      Data[37] = map(analogRead(22), 1023, 0, 1, 3);
     }
     else
     {
-      Data[39] = map(analogRead(A6), 0, 1023, 0, 15000);
-      Data[40] = map(analogRead(A7), 0, 1023, 0, 4);
-      Data[41] = map(analogRead(A8), 0, 1023, 0, 50);
+      Data[38] = map(analogRead(20), 1023, 0, 0, 15000);
+      Data[39] = map(analogRead(21), 1023, 0, 0, 1000);
+      Data[40] = map(analogRead(22), 1023, 0, 0, 50);
     }
   }
 
   // ============================
   // ROTARY 5 (Pin 13)
   // ============================
-  if (digitalRead(13) == HIGH)
+  if (digitalRead(11) == LOW)
   {
-    Data[42] = map(analogRead(A3), 0, 1023, 0, Data[3]);
-    Data[43] = map(analogRead(A4), 0, 1023, 0, Data[42]);
-    int maxOffset = max(Data[43] - 1, 0);
-	Data[44] = map(analogRead(A5), 0, 1023, 0, maxOffset);
+    Data[41] = map(analogRead(17), 1023, 0, 0, Data[3]);
+    Data[42] = map(analogRead(18), 1023, 0, 0, Data[41]);
+    int maxOffset = max(Data[42] - 1, 0);
+	Data[43] = map(analogRead(19), 1023, 0, 0, maxOffset);
 
 
-    if (digitalRead(4) == HIGH)
+    if (digitalRead(4) != LOW)
     {
-      Data[45] = map(analogRead(A6), 0, 1023, 0, 2);
-      Data[46] = map(analogRead(A7), 0, 1023, 0, 2);
-      Data[47] = map(analogRead(A8), 0, 1023, 1, 3);
+      Data[44] = map(analogRead(20), 1023, 0, 0, 1000);
+      Data[45] = map(analogRead(21), 1023, 0, 0, 1000);
+      Data[46] = map(analogRead(22), 1023, 0, 1, 3);
     }
     else
     {
-      Data[48] = map(analogRead(A6), 0, 1023, 0, 15000);
-      Data[49] = map(analogRead(A7), 0, 1023, 0, 4);
-      Data[50] = map(analogRead(A8), 0, 1023, 0, 50);
+      Data[47] = map(analogRead(20), 1023, 0, 0, 15000);
+      Data[48] = map(analogRead(21), 1023, 0, 0, 1000);
+      Data[49] = map(analogRead(22), 1023, 0, 0, 50);
     }
   }
 
   // ============================
   // ROTARY 6 (Pin 14)
   // ============================
-  if (digitalRead(14) == HIGH)
+  if (digitalRead(12) == LOW)
   {
-    Data[51] = map(analogRead(A3), 0, 1023, 0, Data[3]);
-    Data[52] = map(analogRead(A4), 0, 1023, 0, Data[51]);
-    int maxOffset = max(Data[52] - 1, 0);
-	Data[53] = map(analogRead(A5), 0, 1023, 0, maxOffset);
+    Data[50] = map(analogRead(17), 1023, 0, 0, Data[3]);
+    Data[51] = map(analogRead(18), 1023, 0, 0, Data[50]);
+    int maxOffset = max(Data[51] - 1, 0);
+	Data[52] = map(analogRead(19), 1023, 0, 0, maxOffset);
 
 
-    if (digitalRead(4) == HIGH)
+    if (digitalRead(4) != LOW)
     {
-      Data[54] = map(analogRead(A6), 0, 1023, 0, 2);
-      Data[55] = map(analogRead(A7), 0, 1023, 0, 2);
-      Data[56] = map(analogRead(A8), 0, 1023, 1, 3);
+      Data[53] = map(analogRead(20), 1023, 0, 0, 1000);
+      Data[54] = map(analogRead(21), 1023, 0, 0, 1000);
+      Data[55] = map(analogRead(22), 1023, 0, 1, 3);
     }
     else
     {
-      Data[57] = map(analogRead(A6), 0, 1023, 0, 15000);
-      Data[58] = map(analogRead(A7), 0, 1023, 0, 4);
-      Data[59] = map(analogRead(A8), 0, 1023, 0, 50);
+      Data[56] = map(analogRead(20), 1023, 0, 0, 15000);
+      Data[57] = map(analogRead(21), 1023, 0, 0, 1000);
+      Data[58] = map(analogRead(22), 1023, 0, 0, 50);
     }
   }
 
@@ -221,5 +205,5 @@ void loop()
   }
   Serial.println("");
 
-  delay(150);
+  delay(200);
 }
