@@ -17,9 +17,9 @@
 #X obj 286 121 select 1;
 #X obj 55 50 unpack f f;
 #X floatatom 8 78 5 0 0 0 - - - 0;
-#X msg 266 169 open ../samples/808/808_hihat.wav;
-#X msg 265 194 open ../samples/808/808_maraccas.wav;
-#X msg 265 217 open ../samples/808/808_open_hat_short.wav;
+#X msg 266 169 open ./samples/808/808_hihat.wav;
+#X msg 265 194 open ./samples/808/808_maraccas.wav;
+#X msg 265 217 open ./samples/808/808_open_hat_short.wav;
 #X connect 0 0 2 0;
 #X connect 1 0 20 0;
 #X connect 2 0 3 0;

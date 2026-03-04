@@ -17,11 +17,11 @@
 #X obj 286 121 select 1;
 #X obj 55 50 unpack f f;
 #X floatatom 8 78 5 0 0 0 - - - 0;
-#X msg 265 217 open ../samples/rock/rock_hh_tambo.wav;
-#X msg 265 194 open ../samples/rock/rock_hh_s.wav;
 #X msg 266 169 open ../samples/rock/rock_hh.wav;
+#X msg 265 194 open ../samples/rock/rock_hh_s.wav;
+#X msg 265 217 open ../samples/rock/rock_hh_tambo.wav;
 #X connect 0 0 2 0;
-#X connect 1 0 18 0;
+#X connect 1 0 20 0;
 #X connect 2 0 3 0;
 #X connect 4 0 16 0;
 #X connect 5 0 6 0;
@@ -31,7 +31,7 @@
 #X connect 7 0 14 0;
 #X connect 8 0 15 0;
 #X connect 9 0 19 0;
-#X connect 10 0 20 0;
+#X connect 10 0 18 0;
 #X connect 11 0 12 0;
 #X connect 12 0 0 0;
 #X connect 12 1 5 0;

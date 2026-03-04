@@ -17,9 +17,9 @@
 #X obj 316 121 select 1;
 #X obj 85 50 unpack f f;
 #X floatatom 38 78 5 0 0 0 - - - 0;
-#X msg 296 169 open ../samples/rock/rock_rack_tom.wav;
-#X msg 295 194 open ../samples/rock/rock_floor_tom.wav;
-#X msg 295 217 open ../samples/rock/rock_dead_tom.wav;
+#X msg 296 169 open ./samples/rock/rock_rack_tom.wav;
+#X msg 295 194 open ./samples/rock/rock_floor_tom.wav;
+#X msg 295 217 open ./samples/rock/rock_dead_tom.wav;
 #X connect 0 0 2 0;
 #X connect 1 0 20 0;
 #X connect 2 0 3 0;

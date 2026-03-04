@@ -21,16 +21,16 @@ void setup()
   pinMode(A8, INPUT); // SAMPLE / RANDOM
 
   // Digital inputs
-  pinMode(2, INPUT);  // BANK
-  pinMode(4, INPUT);  // FX SWITCH
-  pinMode(7, INPUT);  // ONOFF
+pinMode(2, INPUT_PULLUP);   // BANK
+pinMode(4, INPUT_PULLUP);   // FX SWITCH
+pinMode(6, INPUT_PULLUP);   // ONOFF
 
-  pinMode(9, INPUT);   // ROTARY 1
-  pinMode(10, INPUT);  // ROTARY 2
-  pinMode(11, INPUT);  // ROTARY 3
-  pinMode(12, INPUT);  // ROTARY 4
-  pinMode(13, INPUT);  // ROTARY 5
-  pinMode(14, INPUT);  // ROTARY 6
+pinMode(7, INPUT_PULLUP);   // ROTARY 1
+pinMode(8, INPUT_PULLUP);  // ROTARY 2
+pinMode(9, INPUT_PULLUP);  // ROTARY 3
+pinMode(10, INPUT_PULLUP);  // ROTARY 4
+pinMode(11, INPUT_PULLUP);  // ROTARY 5
+pinMode(12, INPUT_PULLUP);  // ROTARY 6
 }
 
 void loop()
@@ -54,7 +54,7 @@ void loop()
     digitalWrite(6, 0);
   }
   
-  Data[0] = digitalRead(7); // ONOFF
+  Data[0] = !digitalRead(7);
 
   // Global controls (flyttade +1)
   Data[1] = map(analogRead(A0), 0, 1023, 60, 350); // BPM
