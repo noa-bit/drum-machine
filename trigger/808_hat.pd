@@ -1,4 +1,4 @@
-#N canvas 109 483 846 300 12;
+#N canvas 216 483 450 300 12;
 #X msg 55 133 start;
 #X obj 189 144 bng 19 250 50 0 empty empty empty 0 -10 0 12 #fcfcfc #000000 #000000;
 #X obj 55 161 readsf~;
@@ -17,12 +17,11 @@
 #X obj 286 121 select 1;
 #X obj 55 50 unpack f f;
 #X floatatom 8 78 5 0 0 0 - - - 0;
-#X msg -24 162 delay 50;
-#X msg 266 169 open ../samples/808_mp3/808_hihat.mp3;
-#X msg 265 194 open ../samples/808_mp3/808_maraccas.mp3;
-#X msg 265 217 open ../samples/808_mp3/808_open_hat_short.mp3;
+#X msg 266 169 open ../samples/808/808_hihat.wav;
+#X msg 265 194 open ../samples/808/808_maraccas.wav;
+#X msg 265 217 open ../samples/808/808_open_hat_short.wav;
 #X connect 0 0 2 0;
-#X connect 1 0 21 0;
+#X connect 1 0 20 0;
 #X connect 2 0 3 0;
 #X connect 4 0 16 0;
 #X connect 5 0 6 0;
@@ -31,10 +30,10 @@
 #X connect 6 0 13 0;
 #X connect 7 0 14 0;
 #X connect 8 0 15 0;
-#X connect 9 0 20 0;
-#X connect 10 0 19 0;
+#X connect 9 0 19 0;
+#X connect 10 0 18 0;
 #X connect 11 0 12 0;
-#X connect 12 0 18 0;
+#X connect 12 0 0 0;
 #X connect 12 1 5 0;
 #X connect 13 0 1 0;
 #X connect 14 0 9 0;
@@ -42,7 +41,6 @@
 #X connect 16 0 17 0;
 #X connect 16 1 5 0;
 #X connect 17 0 11 0;
-#X connect 18 0 0 0;
+#X connect 18 0 2 0;
 #X connect 19 0 2 0;
 #X connect 20 0 2 0;
-#X connect 21 0 2 0;

@@ -36,7 +36,7 @@ void loop()
 
   Data[0] = !digitalRead(6);
   if (analogRead(23) > 200) {  
-    Data[59] = map(analogRead(23), 0, 1023, 0, 100);
+    Data[59] = map(analogRead(23), 0, 1023, -25, 100);
   } //CHAOS
   else {
     Data[59] = 0;
